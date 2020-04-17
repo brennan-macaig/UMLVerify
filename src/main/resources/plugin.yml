@@ -1,0 +1,24 @@
+main: edu.uml.cs.bmacaig.umlverify.UMLVerify
+name: UMLVerify
+version: 1.15.2
+
+permissions:
+  umlverify.*:
+    description: Give access to all commands
+    children:
+      umlverify.verified: true
+      umlverify.moderator: true
+      umlverify.admin: true
+      umlverify.unverified: false
+  umlverify.verified:
+    description: Given to a verified user on the server
+    default: op
+  umlverify.moderator:
+    descirption: Given to a server moderator to manually verify other players.
+    default: op
+  umlverify.admin:
+    description: Given to a server administrator for OP access.
+    default: op
+  umlverify.unverified:
+    description: Given to unverified players on the server
+    default: true

@@ -1,0 +1,32 @@
+# UMLVerify config.yml
+# PLEASE! Be careful when editing this file!
+# YML can be rather picky. Use a real text editor, like Notepad++, VSCode, or Sublime Text
+# to write to this file.
+
+# SMTP Server Email Settings
+email:
+  smtp-server: localhost
+  smtp-user: username
+  smtp-pass: password
+  from-address: minecraft@uml.edu
+  email-subject: UML Minecraft Server - Verify your Email
+  # Allowable placeholders for the email body are as follows:
+  # %user% - The Minecraft username
+  # %email% - The email address that the email is sent to
+  # %fname% - The first name as determined from the email used
+  # %lname% - The last name as determined from the email used
+  # %authcode% - The authorization code sent to the user. This must be included.
+  email-body:
+    - Hi there, %user%!
+    - You've logged in to the UMass Lowell Minecraft server, and provided this email for verification.
+    - Please enter the following verification code into the game chat, and then press enter
+    - '%authcode%'
+    - If you did not log in to the Minecraft server, or have received this message in error, feel free to ignore this!
+    - Have a great day!
+
+# Verification Settings
+verification:
+  auth-length: 5 # Sets the length of the auth code to use, default is 5.
+  auth-starts-with: '!' # All valid auth codes will lead with this character. By default, ! is used.
+
+  
