@@ -8,14 +8,16 @@ email:
   smtp-server: localhost
   smtp-user: username
   smtp-pass: password
-  from-address: minecraft@uml.edu
-  email-subject: UML Minecraft Server - Verify your Email
+  smtp-port: '587'
+  from-address: hawkcraft@uml.edu
+  email-subject: HawkCraft - Verify your Email
   # Allowable placeholders for the email body are as follows:
   # %user% - The Minecraft username
   # %email% - The email address that the email is sent to
   # %fname% - The first name as determined from the email used
   # %lname% - The last name as determined from the email used
   # %authcode% - The authorization code sent to the user. This must be included.
+  # %uuid% - The Minecraft user Unique User Identifier
   email-body:
     - Hi there, %user%!
     - You've logged in to the UMass Lowell Minecraft server, and provided this email for verification.
@@ -23,10 +25,14 @@ email:
     - '%authcode%'
     - If you did not log in to the Minecraft server, or have received this message in error, feel free to ignore this!
     - Have a great day!
-
+    - '- The HawkCraft Team'
+    - '\n\n'
+    - '--debug info--'
+    - mc_uuid; %uuid%; mc_uname; %user%; uml_credential; %email%;
+0.
 # Verification Settings
 verification:
   auth-length: 5 # Sets the length of the auth code to use, default is 5.
   auth-starts-with: '!' # All valid auth codes will lead with this character. By default, ! is used.
-
-  
+  promote-command: manuadd %user% verified # Runs this command as the server console to promote a user to a verified rank.
+  demote-command: manuadd %user% unverified # Runs this command as the server console to demote a user to a unverified rank.
