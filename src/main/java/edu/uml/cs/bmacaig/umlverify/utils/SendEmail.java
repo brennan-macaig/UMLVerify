@@ -30,9 +30,7 @@ public class SendEmail {
 
     private String generateAuthToken() {
         // Randomly genereate string given size from config file
-        String allowable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                "0123456789" +
-                                "abcdefghijklmnopqrstuvwxyz";
+        String allowable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
         StringBuilder sb = new StringBuilder(AUTH_LENGTH);
         for(int i = 0; i < AUTH_LENGTH; i++) {
             int idx = (int) (allowable.length() * Math.random());

@@ -9,9 +9,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import edu.uml.cs.bmacaig.umlverify.utils.FormatChat;
 import edu.uml.cs.bmacaig.umlverify.utils.Permissions;
@@ -20,9 +23,11 @@ import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 public class EventListener implements Listener{
 
     private final SendEmail emailer;
+    private final JavaPlugin plugin;
 
-    public EventListener(SendEmail emailer) {
+    public EventListener(SendEmail emailer, JavaPlugin plugin) {
         this.emailer = emailer;
+        this.plugin = plugin;
     }
 
     // Player chat event
@@ -39,10 +44,9 @@ public class EventListener implements Listener{
             if(msg.equalsIgnoreCase("verify")) {
                 p.sendMessage(FormatChat.formatChat("&dTo verify your UML email, please type your school provided email address into chat."));
                 p.sendMessage(FormatChat.formatChat("&dThen, follow the instructions that are sent to your school provided email."));
-            }
-
-            // If they type an "email" that ends with uml.edu...
-            if(msg.endsWith("uml.edu")) {
+            } else if(msg.startsWith(plugin.getConfig().getString("verification.auth-starts-with"))) {
+                // Check if valid auth code
+            } else if if(msg.endsWith("uml.edu")) {
                 String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
                 Pattern pat = Pattern.compile(emailRegex);
                 if(pat.matcher(msg).matches()) {
@@ -53,6 +57,8 @@ public class EventListener implements Listener{
                         p.sendMessage(FormatChat.formatChat("&cFailed to send email. Please try again."));
                     }
                 }
+            } else {
+                p.sendMessage(FormatChat.formatChat("&cYou must verify your UML email to do that! Type &dverify&c for help."));
             }
         }
         
@@ -80,13 +86,20 @@ public class EventListener implements Listener{
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerMove(PlayerMoveEvent event) {
+    public void onBlockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
-        if (p.hasPermission(Permissions.unverified)) {
-            event.setTo(event.getFrom());
+        if(p.hasPermission(Permissions.unverified)) {
             event.setCancelled(true);
-            p.sendMessage(FormatChat
-                    .formatChat("&cYou must verify your UML Email to play on this server! Type &dverify&c for help."));
+            p.sendMessage(FormatChat.formatChat("&cYou must verify your UML email to do that! Type &dverify&c for help."));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockPlace(BlockPlaceEvent event) {
+        Player p = event.getPlayer();
+        if(p.hasPermission(Permissions.unverified)) {
+            event.setCancelled(true);
+            p.sendMessage(FormatChat.formatChat("&cYou must verify your UML email to do that! Type &dverify&c for help."));
         }
     }
 
