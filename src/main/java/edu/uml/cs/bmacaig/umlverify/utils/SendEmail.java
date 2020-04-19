@@ -9,7 +9,6 @@ import javax.mail.Transport;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
-import java.util.UUID;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -20,14 +19,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SendEmail {
 
     private final JavaPlugin plugin;
-    private final String SMTP_HOST, SMTP_USER, SMTP_PASS, SMTP_FROM, SMTP_PORT, EMAIL_SUBJECT;
+    private final String SMTP_HOST, SMTP_PASS, SMTP_FROM, SMTP_PORT, EMAIL_SUBJECT;
     private final List<String> EMAIL_BODY;
     private final int AUTH_LENGTH;
 
     public SendEmail(JavaPlugin plugin) {
         this.plugin = plugin;
         this.SMTP_HOST = plugin.getConfig().getString("email.smtp-server");
-        this.SMTP_USER = plugin.getConfig().getString("email.smtp-user");
         this.SMTP_PASS = plugin.getConfig().getString("email.smtp-pass");
         this.SMTP_FROM = plugin.getConfig().getString("email.from-address");
         this.SMTP_PORT = plugin.getConfig().getString("email.smtp-port");
@@ -36,7 +34,7 @@ public class SendEmail {
         this.AUTH_LENGTH = plugin.getConfig().getInt("verification.auth-length");
     }
 
-    private void writeEmail(Session session, String toEmail, String subject, String body) {
+    private boolean writeEmail(Session session, String toEmail, String subject, String body) {
         try {
             MimeMessage msg = new MimeMessage(session);
             msg.addHeader("Content-Type", "text/HTML; charset=UTF-8");
@@ -50,15 +48,16 @@ public class SendEmail {
             msg.setSentDate(new Date());
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             Transport.send(msg);
+            return true;
         } catch (Exception e) {
-            plugin.getLogger().severe("Was unable to send email. Is SMTP configured correctly?");
-            e.printStackTrace();
+            plugin.getLogger().severe("Was unable to send email, likely due to SMTP connection. Is SMTP configured correctly?");
+            return false;
         }
     }
 
     public boolean sendVerification(Player player, String emailAddr) {
         String tok = generateAuthToken();
-        String body = parseEmailBody(plugin.getConfig().getStringList("email.email-body"), player, tok);
+        String body = parseEmailBody(EMAIL_BODY, player, emailAddr, tok);
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -72,11 +71,9 @@ public class SendEmail {
         };
 
         Session session = Session.getInstance(props, auth);
-            
-        writeEmail(session, emailAddr,
-                            plugin.getConfig().getString("email.email-subject"),
+        return writeEmail(session, emailAddr,
+                            EMAIL_SUBJECT,
                             body);
-        return false;
     }
 
     private String generateAuthToken() {
@@ -90,17 +87,14 @@ public class SendEmail {
         return (plugin.getConfig().getString("verification.auth-starts-with") + sb.toString());
     }
 
-    private String parseEmailBody(List<String> body, Player player, String token) {
-        // Allowable modifiers:
-        // %user% - Minecraft user name
-        // %email% - Email address used
-        // %fname% - Firstname peeled from the email
-        // %lname% - Lastname peeled from the email
-        // %authcode% - The actual authcode sent to the user
-        // %uuid% - Minecraft user Unique User Identifier
-
+    private String parseEmailBody(List<String> body, Player player, String email, String authcode) {
+        String output = "";
+        for(String s : body) {
+            output = output + FormatGeneralText.format(s, player, email, authcode);
+            output = output + "\n";
+        }
         
-        return "";
+        return output;
     }
 
 }

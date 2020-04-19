@@ -45,11 +45,10 @@ public class EventListener implements Listener{
             
             // If they ask for help with the verify command.
             if(msg.equalsIgnoreCase("verify")) {
-
-                // Typed the "verify" command for assistance verifying.
-
+                
                 p.sendMessage(FormatChat.formatChat("&dTo verify your UML email, please type your school provided email address into chat."));
                 p.sendMessage(FormatChat.formatChat("&dThen, follow the instructions that are sent to your school provided email."));
+
             } else if(msg.startsWith(plugin.getConfig().getString("verification.auth-starts-with"))) {
                 // Check if valid auth code
                 String yaml = "" + p.getUniqueId() + ".code";
