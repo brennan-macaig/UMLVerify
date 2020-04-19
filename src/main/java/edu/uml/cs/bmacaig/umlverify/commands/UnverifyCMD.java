@@ -1,7 +1,8 @@
 package edu.uml.cs.bmacaig.umlverify.commands;
 
-import edu.uml.cs.bmacaig.umlverify.utils;
 import java.util.regex.Pattern;
+
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -12,7 +13,12 @@ import edu.uml.cs.bmacaig.umlverify.UMLVerify;
 import edu.uml.cs.bmacaig.umlverify.utils.FormatChat;
 import edu.uml.cs.bmacaig.umlverify.utils.Permissions;
 
-public class UnverifyCMD {
+public class UnverifyCMD implements CommandExecutor {
+
+    private JavaPlugin plugin;
+    public UnverifyCMD(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 
@@ -27,9 +33,9 @@ public class UnverifyCMD {
                 if (args.length == 1)
                 {
                     if (IGNpat.matcher(args[0]).matches()) {
-                        String cmd = getPlugin().getConfig().getString("verification.demote-command"); // get the string
+                        String cmd = plugin.getConfig().getString("verification.demote-command"); // get the string
                         cmd = cmd.replaceAll("%user%", args[0]);
-                        getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
+                        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd);
                     
                     }
                     else
@@ -44,6 +50,6 @@ public class UnverifyCMD {
             }
         }
         
-        return false;
+        return true;
     }
 }
