@@ -24,20 +24,9 @@ public class VerifyCMD implements CommandExecutor {
             // TODO: command name is not resolveable
             if ((player.hasPermission(Permissions.moderator) || player.hasPermission(Permissions.moderator))) 
             {
-                if (args.length == 2)
+                if (args.length == 1)
                 {
-                    if (IGNpat.matcher(args[0]).matches())
-                    {
-                        // check for email and start verify process
-                    }
-                    else
-                    {
-                        player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
-                    }
-                }
-                else if (args.length == 1)
-                {
-                    if (true) {
+                   if (IGNpat.matcher(args[0]).matches()) {
                         String cmd = getPlugin().getConfig().getString("verification.promote-command"); // get the string
                         cmd = cmd.replaceAll("%user%", args[0]);
                         getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
@@ -47,6 +36,22 @@ public class VerifyCMD implements CommandExecutor {
                     {
                         player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
                     }
+                }
+                else
+                {
+                    player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
+                }
+                else if (args.length == 2)
+                {
+                     if (IGNpat.matcher(args[0]).matches())
+                    {
+                        // check for email and start verify process
+                    }
+                    else
+                    {
+                        player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
+                    }
+                    
                 }
                 else
                 {
