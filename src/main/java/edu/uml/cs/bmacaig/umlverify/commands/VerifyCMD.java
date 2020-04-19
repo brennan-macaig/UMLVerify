@@ -25,7 +25,7 @@ public class VerifyCMD implements CommandExecutor {
             // TODO: command name is not resolveable
             if ((player.hasPermission(Permissions.moderator) || player.hasPermission(Permissions.moderator))) 
             {
-                if (args.length == 1)
+                if (args.length == 1) // manual verify
                 {
                     if (IGNpat.matcher(args[0]).matches())
                     {
@@ -43,38 +43,37 @@ public class VerifyCMD implements CommandExecutor {
                 {
                     player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
                 }
-            }
-            else if (args.length == 2)
-            {
-                if (IGNpat.matcher(args[0]).matches())
+                else if (args.length == 2) // submit auth code request for user at provided email
                 {
-                    if (emailPat.matcher(args[1]).matches())
+                    if (IGNpat.matcher(args[0]).matches()) // check for valid username
                     {
-                        if (SendEmail.sendVerification(args[0], args[1]))
+                        if (emailPat.matcher(args[1]).matches()) // check for valid email
                         {
-                            player.sendMessage(FormatChat.formatChat("&eEmail sent! Ask player to check their inbox for instructions"));
+                            if (SendEmail.sendVerification(args[0], args[1]))
+                            {
+                                player.sendMessage(FormatChat.formatChat("&eEmail sent! Ask player to check their inbox for instructions"));
+                            }
+                            else
+                            {
+                                player.sendMessage(FormatChat.formatChat("&cFailed to send email. Please try again."));
+                            }
                         }
                         else
                         {
-                            player.sendMessage(FormatChat.formatChat("&cFailed to send email. Please try again."));
+                            player.sendMessage(FormatChat.formatChat("&dInvalid email entered!"));
                         }
                     }
                     else
                     {
-                        player.sendMessage(FormatChat.formatChat("&dInvalid email entered!"));
+                        player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
                     }
+                
                 }
                 else
                 {
-                    player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
+                    player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
                 }
-                
             }
-            else
-            {
-                player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
-            }
-        }
         
         return false;
     }
