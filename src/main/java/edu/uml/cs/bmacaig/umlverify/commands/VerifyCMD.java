@@ -1,4 +1,4 @@
-/*package edu.uml.cs.bmacaig.umlverify.commands;
+package edu.uml.cs.bmacaig.umlverify.commands;
 
 import edu.uml.cs.bmacaig.umlverify.utils;
 import java.util.regex.Pattern;
@@ -39,7 +39,7 @@ public class VerifyCMD implements CommandExecutor {
                 {
                     if (true) {
                         String cmd = getPlugin().getConfig().getString("verification.promote-command"); // get the string
-                        cmd = cmd.replaceAll("%user%", args[1]);
+                        cmd = cmd.replaceAll("%user%", args[0]);
                         getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
                     
                     }
@@ -58,4 +58,3 @@ public class VerifyCMD implements CommandExecutor {
         return false;
     }
 }
-*/
