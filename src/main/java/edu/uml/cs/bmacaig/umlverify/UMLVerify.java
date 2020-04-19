@@ -1,13 +1,14 @@
 package edu.uml.cs.bmacaig.umlverify;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 import edu.uml.cs.bmacaig.umlverify.eventhandlers.EventListener;
-import edu.uml.cs.bmacaig.umlverify.utils.AuthToken;
 import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 
 /**
@@ -17,13 +18,13 @@ import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 public class UMLVerify extends JavaPlugin {
     
     private SendEmail sendemail;
-    public List<AuthToken> issuedTokens;
+    public static Hashtable<String,String> issuedTokens;
 
     @Override
     public void onEnable() {
         final long startTime = System.nanoTime();
         this.sendemail = new SendEmail(this);
-        issuedTokens = new ArrayList<AuthToken>();
+        issuedTokens = new Hashtable<String,String>();
         getLogger().info("Loading Config YML file...");
         this.saveConfig();
         getLogger().info("YML Files loaded. Registering commands...");

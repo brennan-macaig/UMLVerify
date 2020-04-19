@@ -16,6 +16,8 @@ import javax.mail.internet.MimeMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import edu.uml.cs.bmacaig.umlverify.UMLVerify;
+
 public class SendEmail {
 
     private final JavaPlugin plugin;
@@ -48,6 +50,7 @@ public class SendEmail {
             msg.setSentDate(new Date());
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             Transport.send(msg);
+            plugin.getLogger().info("Sent verification email to " + toEmail);
             return true;
         } catch (Exception e) {
             plugin.getLogger().severe("Was unable to send email, likely due to SMTP connection. Is SMTP configured correctly?");
@@ -58,6 +61,7 @@ public class SendEmail {
     public boolean sendVerification(Player player, String emailAddr) {
         String tok = generateAuthToken();
         String body = parseEmailBody(EMAIL_BODY, player, emailAddr, tok);
+        UMLVerify.issuedTokens.put(player.getName(), tok);
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -84,7 +88,7 @@ public class SendEmail {
             int idx = (int) (allowable.length() * Math.random());
             sb.append(allowable.charAt(idx));
         }
-        return (plugin.getConfig().getString("verification.auth-starts-with") + sb.toString());
+        return sb.toString();
     }
 
     private String parseEmailBody(List<String> body, Player player, String email, String authcode) {

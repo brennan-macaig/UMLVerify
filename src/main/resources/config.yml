@@ -33,6 +33,6 @@ email:
 # Verification Settings
 verification:
   auth-length: 5 # Sets the length of the auth code to use, default is 5.
-  auth-starts-with: '!' # All valid auth codes will lead with this character. By default, ! is used.
+  auth-starts-with: '#' # All valid auth codes will lead with this character. By default, ! is used.
   promote-command: manuadd %user% verified # Runs this command as the server console to promote a user to a verified rank.
   demote-command: manuadd %user% unverified # Runs this command as the server console to demote a user to a unverified rank.
