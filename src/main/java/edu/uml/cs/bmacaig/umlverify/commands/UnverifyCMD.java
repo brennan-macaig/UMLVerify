@@ -27,7 +27,6 @@ public class UnverifyCMD {
                 if (args.length == 1)
                 {
                     if (IGNpat.matcher(args[0]).matches()) {
-                        // check if username exists in server and is ranked
                         String cmd = getPlugin().getConfig().getString("verification.demote-command"); // get the string
                         cmd = cmd.replaceAll("%user%", args[0]);
                         getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
