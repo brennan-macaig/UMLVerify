@@ -13,7 +13,6 @@ public class UMLVerify extends JavaPlugin {
     
     private SendEmail sendemail;
 
-
     @Override
     public void onEnable() {
         this.sendemail = new SendEmail(this);
@@ -33,6 +32,5 @@ public class UMLVerify extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Saving config");
         this.saveConfig();
-
     }
 }

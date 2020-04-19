@@ -29,7 +29,7 @@ email:
     - '\n\n'
     - '--debug info--'
     - mc_uuid; %uuid%; mc_uname; %user%; uml_credential; %email%;
-0.
+    
 # Verification Settings
 verification:
   auth-length: 5 # Sets the length of the auth code to use, default is 5.
