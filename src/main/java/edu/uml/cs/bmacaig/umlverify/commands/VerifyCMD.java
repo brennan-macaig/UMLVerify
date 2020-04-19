@@ -1,10 +1,10 @@
 package edu.uml.cs.bmacaig.umlverify.commands;
 
+import edu.uml.cs.bmacaig.umlverify.utils;
 import java.util.regex.Pattern;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import utils.Permissions.moderator
 
 public class VerifyCMD implements CommandExecutor {
 
@@ -16,11 +16,20 @@ public class VerifyCMD implements CommandExecutor {
             Player player = (Player) sender;
             Pattern IGNpat = Pattern.compile("[a-Z0-9_]{3,16}");
 
-            if ((player.hasPermission(utils.Permissions.moderator) || player.hasPermission(utils.Permissions.moderator)) && commandName.equals("verify"))
+            if ((  player.hasPermission(Permissions.moderator)
+                || player.hasPermission(Permissions.admin))
+                && commandName.equals("verify"))
             {
                 if (args.length == 2)
                 {
-                    //validate regular verify
+                    if (IGNpat.matcher(args[0]).matches())
+                    {
+                        // check for email and start verify process
+                    }
+                    else
+                    {
+                        player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
+                    }
                 }
                 else if (args.length == 1)
                 {
@@ -31,10 +40,14 @@ public class VerifyCMD implements CommandExecutor {
                         getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
                     
                     }
+                    else
+                    {
+                        player.sendMessage(FormatChat.formatChat("&dInvalid username entered!"));
+                    }
                 }
                 else
                 {
-                     player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
+                    player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
                 }
             }
         }
