@@ -22,3 +22,10 @@ permissions:
   umlverify.unverified:
     description: Given to unverified players on the server
     default: true
+commands:
+  verify:
+    description: Verify another player on the server
+    usage: /verify <player> <emailAddress>
+  unverify:
+    description: Unverify a player on the server
+    usage: /unverify <player>
