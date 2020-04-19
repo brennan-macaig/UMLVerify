@@ -1,8 +1,13 @@
 package edu.uml.cs.bmacaig.umlverify;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import edu.uml.cs.bmacaig.umlverify.eventhandlers.EventListener;
+import edu.uml.cs.bmacaig.umlverify.utils.AuthToken;
 import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 
 /**
@@ -12,19 +17,21 @@ import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 public class UMLVerify extends JavaPlugin {
     
     private SendEmail sendemail;
+    public List<AuthToken> issuedTokens;
 
     @Override
     public void onEnable() {
+        final long startTime = System.nanoTime();
         this.sendemail = new SendEmail(this);
-        long startTime = System.nanoTime();
+        issuedTokens = new ArrayList<AuthToken>();
         getLogger().info("Loading Config YML file...");
-        this.saveDefaultConfig();
+        this.saveConfig();
         getLogger().info("YML Files loaded. Registering commands...");
         getLogger().info("Commands registered. Registering event listeners...");
         getServer().getPluginManager().registerEvents(new EventListener(sendemail, this), this);
-        long endTime = System.nanoTime();
-        long timeElapsed = endTime - startTime;
-        double seconds = (double) timeElapsed / 1000000000;
+        final long endTime = System.nanoTime();
+        final long timeElapsed = endTime - startTime;
+        final double seconds = (double) timeElapsed / 1000000000;
         getLogger().info("All done! Plugin enabled. Took a total of " + seconds + " seconds.");
     }
 

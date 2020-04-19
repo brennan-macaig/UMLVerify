@@ -1,4 +1,4 @@
-package edu.uml.cs.bmacaig.umlverify.commands;
+/*package edu.uml.cs.bmacaig.umlverify.commands;
 
 import java.util.regex.Pattern;
 import org.bukkit.command.Command;
@@ -12,7 +12,6 @@ import edu.uml.cs.bmacaig.umlverify.utils.FormatChat;
 import edu.uml.cs.bmacaig.umlverify.utils.Permissions;
 
 public class VerifyCMD implements CommandExecutor {
-
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 
@@ -30,10 +29,9 @@ public class VerifyCMD implements CommandExecutor {
                 }
                 else if (args.length == 1)
                 {
-                    if (true) // what error is this throwing? why? I can't make sense of it.
-                    {
+                    if (true) {
                         String cmd = getPlugin().getConfig().getString("verification.promote-command"); // get the string
-                        cmd = cmd.replaceAll("%user%", String args[1])
+                        cmd = cmd.replaceAll("%user%", args[1]);
                         getServer().dispatchCommand(getServer().getConsoleSender(), cmd);
                     
                     }
@@ -48,3 +46,4 @@ public class VerifyCMD implements CommandExecutor {
         return false;
     }
 }
+*/
