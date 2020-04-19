@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import edu.uml.cs.bmacaig.umlverify.commands.UnverifyCMD;
+import edu.uml.cs.bmacaig.umlverify.commands.VerifyCMD;
 import edu.uml.cs.bmacaig.umlverify.eventhandlers.EventListener;
 import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 
@@ -28,6 +30,8 @@ public class UMLVerify extends JavaPlugin {
         getLogger().info("Loading Config YML file...");
         this.saveConfig();
         getLogger().info("YML Files loaded. Registering commands...");
+        this.getCommand("verify").setExecutor(new VerifyCMD(this, sendemail));
+        this.getCommand("unverify").setExecutor(new UnverifyCMD(this));
         getLogger().info("Commands registered. Registering event listeners...");
         getServer().getPluginManager().registerEvents(new EventListener(sendemail, this), this);
         final long endTime = System.nanoTime();
