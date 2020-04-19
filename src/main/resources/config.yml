@@ -19,16 +19,21 @@ email:
   # %authcode% - The authorization code sent to the user. This must be included.
   # %uuid% - The Minecraft user Unique User Identifier
   email-body:
-    - Hi there, %user%!
-    - You've logged in to the UMass Lowell Minecraft server, and provided this email for verification.
-    - Please enter the following verification code into the game chat, and then press enter
-    - '%authcode%'
-    - If you did not log in to the Minecraft server, or have received this message in error, feel free to ignore this!
-    - Have a great day!
-    - '- The HawkCraft Team'
-    - '\n\n'
-    - '--debug info--'
-    - mc_uuid; %uuid%; mc_uname; %user%; uml_credential; %email%;
+  - Hi there, %user%!
+  - ''
+  - You've logged in to the UMass Lowell Minecraft server, and provided this email
+    for verification.
+  - 'Please enter the following verification code into the game chat, and then press
+    enter: %authcode%'
+  - ''
+  - If you did not log in to the Minecraft server, or have received this message in
+    error, feel free to ignore this!
+  - Have a great day!
+  - '- The HawkCraft Team'
+  - ''
+  - ''
+  - --debug info--
+  - mc_uuid; %uuid%; mc_uname; %user%; uml_credential; %email%;
     
 # Verification Settings
 verification:
