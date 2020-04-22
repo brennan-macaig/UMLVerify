@@ -19,7 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import edu.uml.cs.bmacaig.umlverify.UMLVerify;
 
 public class SendEmail {
-
+    
+    private static String token;
     private final JavaPlugin plugin;
     private final String SMTP_HOST, SMTP_PASS, SMTP_FROM, SMTP_PORT, EMAIL_SUBJECT;
     private final List<String> EMAIL_BODY;
@@ -61,7 +62,7 @@ public class SendEmail {
     public boolean sendVerification(Player player, String emailAddr) {
         String tok = generateAuthToken();
         String body = parseEmailBody(EMAIL_BODY, player, emailAddr, tok);
-        UMLVerify.issuedTokens.put(player.getName(), tok);
+        token = tok;
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -75,9 +76,13 @@ public class SendEmail {
         };
 
         Session session = Session.getInstance(props, auth);
-        return writeEmail(session, emailAddr,
-                            EMAIL_SUBJECT,
-                            body);
+        
+        if(writeEmail(session, emailAddr, EMAIL_SUBJECT, body)) {
+            UMLVerify.issuedTokens.put(player.getName(), tok);
+            return true;
+        } else {
+            return false;
+        }                    
     }
 
     private String generateAuthToken() {

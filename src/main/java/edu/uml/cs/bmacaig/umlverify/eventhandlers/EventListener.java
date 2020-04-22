@@ -94,6 +94,7 @@ public class EventListener implements Listener{
                 playerRecipients.add(recipient);
             }
         }
+        playerRecipients.add(event.getPlayer());
         event.getRecipients().clear();
         event.getRecipients().addAll(playerRecipients);
     }

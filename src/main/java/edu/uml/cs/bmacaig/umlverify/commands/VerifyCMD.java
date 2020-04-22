@@ -28,7 +28,7 @@ public class VerifyCMD implements CommandExecutor {
         if (sender instanceof Player)
 	    {
             final Player player = (Player) sender;
-            final Pattern IGNpat = Pattern.compile("[a-Z0-9_]{3,16}");
+            final Pattern IGNpat = Pattern.compile("[Z-a0-9_]{3,16}");
             final Pattern emailPat = Pattern.compile("^[a-zA-Z]+_[a-zA-Z]+[0-9]*@(student.){0,1}uml.edu$");
 
             // TODO: command name is not resolveable

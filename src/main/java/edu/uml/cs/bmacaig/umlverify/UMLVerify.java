@@ -28,7 +28,7 @@ public class UMLVerify extends JavaPlugin {
         this.sendemail = new SendEmail(this);
         issuedTokens = new Hashtable<String,String>();
         getLogger().info("Loading Config YML file...");
-        this.saveConfig();
+        this.saveDefaultConfig();
         getLogger().info("YML Files loaded. Registering commands...");
         this.getCommand("verify").setExecutor(new VerifyCMD(this, sendemail));
         this.getCommand("unverify").setExecutor(new UnverifyCMD(this));
@@ -42,7 +42,5 @@ public class UMLVerify extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("Saving config");
-        this.saveConfig();
     }
 }

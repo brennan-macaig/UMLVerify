@@ -13,6 +13,7 @@ import edu.uml.cs.bmacaig.umlverify.UMLVerify;
 import edu.uml.cs.bmacaig.umlverify.utils.FormatChat;
 import edu.uml.cs.bmacaig.umlverify.utils.Permissions;
 
+
 public class UnverifyCMD implements CommandExecutor {
 
     private JavaPlugin plugin;
