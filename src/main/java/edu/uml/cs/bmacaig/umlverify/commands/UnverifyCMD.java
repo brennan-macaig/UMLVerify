@@ -26,7 +26,7 @@ public class UnverifyCMD implements CommandExecutor {
         if (sender instanceof Player)
 	    {
             final Player player = (Player) sender;
-            final Pattern IGNpat = Pattern.compile("[a-Z0-9_]{3,16}");
+            final Pattern IGNpat = Pattern.compile("[A-z0-9_]{3,16}");
 
             // TODO: command name is not resolveable
             if ((player.hasPermission(Permissions.moderator) || player.hasPermission(Permissions.moderator))) 
@@ -37,6 +37,7 @@ public class UnverifyCMD implements CommandExecutor {
                         String cmd = plugin.getConfig().getString("verification.demote-command"); // get the string
                         cmd = cmd.replaceAll("%user%", args[0]);
                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd);
+                        player.sendMessage(FormatChat.formatChat("&dUnverify command dispatched!!"));
                     
                     }
                     else

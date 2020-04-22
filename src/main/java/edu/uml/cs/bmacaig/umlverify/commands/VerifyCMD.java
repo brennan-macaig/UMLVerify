@@ -28,7 +28,7 @@ public class VerifyCMD implements CommandExecutor {
         if (sender instanceof Player)
 	    {
             final Player player = (Player) sender;
-            final Pattern IGNpat = Pattern.compile("[Z-a0-9_]{3,16}");
+            final Pattern IGNpat = Pattern.compile("[A-z0-9_]{3,16}");
             final Pattern emailPat = Pattern.compile("^[a-zA-Z]+_[a-zA-Z]+[0-9]*@(student.){0,1}uml.edu$");
 
             // TODO: command name is not resolveable
@@ -41,6 +41,7 @@ public class VerifyCMD implements CommandExecutor {
                         String cmd = plugin.getConfig().getString("verification.promote-command"); // get the string
                         cmd = cmd.replaceAll("%user%", args[0]);
                         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), cmd);
+                        player.sendMessage(FormatChat.formatChat("&dVerify command dispatched!!"));
                     
                     }
                     else
@@ -79,8 +80,10 @@ public class VerifyCMD implements CommandExecutor {
                     player.sendMessage(FormatChat.formatChat("&dUsage: /verify <username> <email>"));
                 }
             }
-        
-        return true;
+
+            return true;
+        }
+    return true;
     }
     return true;
 }
