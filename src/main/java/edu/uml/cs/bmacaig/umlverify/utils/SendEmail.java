@@ -16,8 +16,11 @@ import javax.mail.internet.MimeMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SendEmail {
+import edu.uml.cs.bmacaig.umlverify.UMLVerify;
 
+public class SendEmail {
+    
+    private static String token;
     private final JavaPlugin plugin;
     private final String SMTP_HOST, SMTP_PASS, SMTP_FROM, SMTP_PORT, EMAIL_SUBJECT;
     private final List<String> EMAIL_BODY;
@@ -48,6 +51,7 @@ public class SendEmail {
             msg.setSentDate(new Date());
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
             Transport.send(msg);
+            plugin.getLogger().info("Sent verification email to " + toEmail);
             return true;
         } catch (Exception e) {
             plugin.getLogger().severe("Was unable to send email, likely due to SMTP connection. Is SMTP configured correctly?");
@@ -58,6 +62,7 @@ public class SendEmail {
     public boolean sendVerification(Player player, String emailAddr) {
         String tok = generateAuthToken();
         String body = parseEmailBody(EMAIL_BODY, player, emailAddr, tok);
+        token = tok;
         Properties props = new Properties();
         props.put("mail.smtp.host", SMTP_HOST);
         props.put("mail.smtp.port", SMTP_PORT);
@@ -71,9 +76,13 @@ public class SendEmail {
         };
 
         Session session = Session.getInstance(props, auth);
-        return writeEmail(session, emailAddr,
-                            EMAIL_SUBJECT,
-                            body);
+        
+        if(writeEmail(session, emailAddr, EMAIL_SUBJECT, body)) {
+            UMLVerify.issuedTokens.put(player.getName(), tok);
+            return true;
+        } else {
+            return false;
+        }                    
     }
 
     private String generateAuthToken() {
@@ -84,7 +93,7 @@ public class SendEmail {
             int idx = (int) (allowable.length() * Math.random());
             sb.append(allowable.charAt(idx));
         }
-        return (plugin.getConfig().getString("verification.auth-starts-with") + sb.toString());
+        return sb.toString();
     }
 
     private String parseEmailBody(List<String> body, Player player, String email, String authcode) {
