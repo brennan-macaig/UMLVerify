@@ -5,7 +5,7 @@
 
 To build the plugin, ensure you have Maven installed and on your system path.
 
-Then, run
+Rename `src/main/resources/config.TEMPLATE.yml` to `src/main/resources/config.yml`, then run
 
 ```
 mvn install

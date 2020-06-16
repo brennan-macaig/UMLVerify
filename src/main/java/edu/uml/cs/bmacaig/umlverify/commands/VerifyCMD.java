@@ -85,6 +85,4 @@ public class VerifyCMD implements CommandExecutor {
         }
     return true;
     }
-    return true;
-}
 }

@@ -2,3 +2,4 @@
 *.jar
 *.code-workspace
 target/
+config.yml

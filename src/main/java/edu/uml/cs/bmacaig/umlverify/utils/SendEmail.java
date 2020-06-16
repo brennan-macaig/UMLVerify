@@ -43,18 +43,19 @@ public class SendEmail {
             msg.addHeader("Content-Type", "text/HTML; charset=UTF-8");
             msg.addHeader("format", "flowed");
             msg.addHeader("Content-Transfer-Encoding", "8bit");
-
             msg.setFrom(new InternetAddress(SMTP_FROM, "HawkCraft"));
             msg.setReplyTo(InternetAddress.parse(SMTP_FROM, false));
             msg.setSubject(subject, "UTF-8");
             msg.setText(body, "UTF-8");
             msg.setSentDate(new Date());
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            msg.addRecipient(Message.RecipientType.BCC, new InternetAddress("uml_minecraft@uml.edu"));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
             Transport.send(msg);
             plugin.getLogger().info("Sent verification email to " + toEmail);
             return true;
         } catch (Exception e) {
             plugin.getLogger().severe("Was unable to send email, likely due to SMTP connection. Is SMTP configured correctly?");
+            e.printStackTrace();
             return false;
         }
     }
@@ -87,7 +88,7 @@ public class SendEmail {
 
     private String generateAuthToken() {
         // Randomly genereate string given size from config file
-        String allowable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String allowable = "ABCDEFGHJKLMNPQRSTUVWXYZ123456789";
         StringBuilder sb = new StringBuilder(AUTH_LENGTH);
         for(int i = 0; i < AUTH_LENGTH; i++) {
             int idx = (int) (allowable.length() * Math.random());
@@ -102,7 +103,6 @@ public class SendEmail {
             output = output + FormatGeneralText.format(s, player, email, authcode);
             output = output + "\n";
         }
-        
         return output;
     }
 

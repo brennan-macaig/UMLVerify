@@ -1,10 +1,5 @@
 package edu.uml.cs.bmacaig.umlverify;
-
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,10 +8,6 @@ import edu.uml.cs.bmacaig.umlverify.commands.VerifyCMD;
 import edu.uml.cs.bmacaig.umlverify.eventhandlers.EventListener;
 import edu.uml.cs.bmacaig.umlverify.utils.SendEmail;
 
-/**
- * Hello world!
- *
- */
 public class UMLVerify extends JavaPlugin {
     
     private SendEmail sendemail;

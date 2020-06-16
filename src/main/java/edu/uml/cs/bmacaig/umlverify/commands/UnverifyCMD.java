@@ -9,7 +9,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import edu.uml.cs.bmacaig.umlverify.UMLVerify;
 import edu.uml.cs.bmacaig.umlverify.utils.FormatChat;
 import edu.uml.cs.bmacaig.umlverify.utils.Permissions;
 
