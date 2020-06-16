@@ -1,5 +1,8 @@
 # UMLVerify Plugin
 
+### Contributing
+
+Want to help make this project better? Please fork the project from the most recent stable build (typically this is `master`), and make any changes that you'd like to see in the source. After you have made all your changes, verify that the plugin builds and runs without issue on a Paper-Spigot server. Then, submit a pull request to this project.
 
 ### Building
 
